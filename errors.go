@@ -114,6 +114,9 @@ var (
 	// ErrWillTripCircuitAlreadySet is returned when the WillTripCircuit
 	// setting has already been configured
 	ErrWillTripCircuitAlreadySet = newSettingsConflictError("WillTripCircuit")
+	// ErrLoggerAlreadySet is returned when the Logger
+	// setting has already been configured
+	ErrLoggerAlreadySet = newSettingsConflictError("Logger")
 )
 
 // IsExpectedErrorer defines an interface that one can use when defining their

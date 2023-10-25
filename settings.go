@@ -2,6 +2,8 @@ package circuitry
 
 import (
 	"time"
+
+	"github.com/sigmavirus24/circuitry/log"
 )
 
 // NameFunc defines the signature of the function used to generate names for
@@ -91,6 +93,7 @@ type FactorySettings struct {
 	CyclicClearAfter            time.Duration
 	StateChangeCallback         StateChangeFunc
 	WillTripCircuit             WillTripFunc
+	Logger                      log.Logger
 }
 
 // GenerateName builds a name for a CircuitBreaker
@@ -117,6 +120,10 @@ func (s *FactorySettings) circuitBreakerFor(circuit string, circuitContext map[s
 	if tripper == nil {
 		tripper = DefaultTripFunc
 	}
+	logger := s.Logger
+	if logger == nil {
+		logger = &log.NoOp{}
+	}
 	return &circuitBreaker{
 		name:                  name,
 		storage:               s.StorageBackend,
@@ -129,6 +136,7 @@ func (s *FactorySettings) circuitBreakerFor(circuit string, circuitContext map[s
 		circuitContext:        circuitContext,
 		tripperFn:             tripper,
 		stateChangeFn:         s.StateChangeCallback,
+		logger:                logger,
 	}
 }
 
@@ -259,6 +267,18 @@ func WithTripFunc(tf WillTripFunc) SettingsOption {
 			return ErrWillTripCircuitAlreadySet
 		}
 		s.WillTripCircuit = tf
+		return nil
+	}
+}
+
+// WithLogger configures the Logger setting to use a given logger as long as
+// it implements the interface we expect
+func WithLogger(l log.Logger) SettingsOption {
+	return func(s *FactorySettings) error {
+		if s.Logger != nil {
+			return ErrLoggerAlreadySet
+		}
+		s.Logger = l
 		return nil
 	}
 }

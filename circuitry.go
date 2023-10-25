@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"sync"
 	"time"
+
+	"github.com/sigmavirus24/circuitry/log"
 )
 
 // WorkFn defines the allowed interface of a function that can be passed to
@@ -47,6 +49,7 @@ type circuitBreaker struct {
 	resetCycle            time.Duration
 	tripperFn             WillTripFunc
 	stateChangeFn         StateChangeFunc
+	logger                log.Logger
 
 	counts     *circuitCounts
 	state      CircuitState
@@ -80,6 +83,7 @@ func (cb *circuitBreaker) Start(ctx context.Context) error {
 		}
 	}
 	cb.counts.AddRequest()
+	cb.logger.WithField("circuit_name", cb.name).Info("starting circuit breaker")
 	return nil
 }
 
@@ -155,6 +159,11 @@ func (cb *circuitBreaker) End(ctx context.Context, err error) error {
 	now := time.Now()
 	defer cb.unlockRemoteState()
 	status := cb.errMatcher(err)
+	cb.logger.WithFields(log.Fields{
+		"work_err":             err,
+		"error_matcher_status": status.String(),
+		"circuit_name":         cb.name,
+	}).Info("circuit breaker ended")
 	switch status {
 	case ExecutionSucceeded:
 		cb.endSuccess(ctx, now)

@@ -5,6 +5,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/sigmavirus24/circuitry/log"
 )
 
 func newFactory(opts ...SettingsOption) *CircuitBreakerFactory {
@@ -38,5 +40,18 @@ func TestSetState(t *testing.T) {
 	cb.setState(CircuitClosed, time.Now())
 	if cb.state != CircuitClosed {
 		t.Fatalf("expected cb.state = %s; got %s", CircuitClosed, cb.state)
+	}
+}
+
+func TestDefaultNoOpLogger(t *testing.T) {
+	s, err := NewFactorySettings()
+	if err != nil {
+		t.Fatalf("expected to not receive an error but got %v", err)
+	}
+	factory := NewCircuitBreakerFactory(s)
+	breaker := factory.BreakerFor("breaker", map[string]any{})
+	actualBreaker, _ := breaker.(*circuitBreaker)
+	if _, ok := actualBreaker.logger.(*log.NoOp); !ok {
+		t.Fatalf("expected logger to default to log.NoOp; got %T", actualBreaker.logger)
 	}
 }

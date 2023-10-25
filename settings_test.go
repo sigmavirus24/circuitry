@@ -8,6 +8,7 @@ import (
 
 	"github.com/sigmavirus24/circuitry"
 	"github.com/sigmavirus24/circuitry/backends"
+	"github.com/sigmavirus24/circuitry/log"
 )
 
 func TestDefaultNameFunc(t *testing.T) {
@@ -137,6 +138,11 @@ func TestBuildFactorySettingsWithConflictingOptions(t *testing.T) {
 			circuitry.WithCloseThreshold(5),
 			circuitry.ErrCloseThresholdAlreadySet,
 			"ErrCloseThresholdAlreadySet",
+		},
+		"logger": {
+			circuitry.WithLogger(&log.NoOp{}),
+			circuitry.ErrLoggerAlreadySet,
+			"ErrLoggerAlreadySet",
 		},
 	}
 
