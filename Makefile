@@ -1,6 +1,8 @@
-.PHONY: lint test integration-test show-cov html-cov
+.PHONY: all
 
-files := $(wildcard *.go)
+files := $(wildcard *.go **/*.go)
+
+all: lint test
 
 lint: $(files)
 	@echo "Running autoformatters ..."
@@ -9,18 +11,21 @@ lint: $(files)
 	@echo "Running golangci-lint ..."
 	@golangci-lint run . 
 
-test: lint $(files)
+test: $(files)
 	@go test -v -cover -coverprofile=coverage.out . ./...
 
-integration-test: lint
+integration-test: $(files)
 	@DYNAMODB_URL=http://localhost:8000 go test -v -cover -coverprofile=coverage.out ./...
+
+ci-integration-test: $(files)
+	@go test -v -cover -coverprofile=coverage.out ./...
 
 coverage.out: test
 
 show-cov: coverage.out
 	@go tool cover -func=coverage.out
 
-show-integration-cov: integration-test
+ci-show-integration-cov: ci-integration-test
 	@go tool cover -func=coverage.out
 
 html-cov: coverage.out

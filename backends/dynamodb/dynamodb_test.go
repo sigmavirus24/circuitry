@@ -199,9 +199,7 @@ func TestBackendRetrieve(t *testing.T) {
 	if err != nil {
 		t.Fatalf("expected to retrieve information, got err = %v", err)
 	}
-	if expected != actual {
-		t.Fatalf("expected backend.Retrieve() = %+v; got %+v", expected, actual)
-	}
+	deepEqCi(t, expected, actual)
 }
 
 func TestBackendRetrieveUnmarshalError(t *testing.T) {

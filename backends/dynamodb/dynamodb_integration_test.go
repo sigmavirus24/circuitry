@@ -86,6 +86,13 @@ func dynamodbClientFromURL() *dynamodb.Client {
 	return dynamodb.NewFromConfig(*awsCfg)
 }
 
+func deepEqCi(t *testing.T, expected, actual circuitry.CircuitInformation) {
+	t.Helper()
+	if expected.State != actual.State || expected.Generation != actual.Generation || expected.ConsecutiveFailures != actual.ConsecutiveFailures || expected.ConsecutiveSuccesses != actual.ConsecutiveSuccesses || expected.Total != actual.Total || expected.TotalFailures != actual.TotalFailures || expected.TotalSuccesses != actual.TotalSuccesses || !expected.ExpiresAfter.Equal(actual.ExpiresAfter) {
+		t.Fatalf("expected %+v; got\n        %+v", expected, actual)
+	}
+}
+
 func maybeSkip(t *testing.T) {
 	t.Helper()
 
@@ -234,9 +241,7 @@ func TestBackendIntegrationRetrieveRealData(t *testing.T) {
 		t.Fatalf("expected to get empty CircuitInformation, got err = %v", err)
 	}
 
-	if expected != actual {
-		t.Fatalf("expected to get %+v; got %+v", expected, actual)
-	}
+	deepEqCi(t, expected, actual)
 }
 
 func TestBackendIntegrationStoreNoTable(t *testing.T) {
@@ -335,9 +340,7 @@ func TestBackendIntegrationStoreRealData(t *testing.T) {
 		t.Fatalf("expected to get stored CircuitInformation, got err = %v", err)
 	}
 
-	if expected != actual {
-		t.Fatalf("expected to get %+v; got %+v", expected, actual)
-	}
+	deepEqCi(t, expected, actual)
 }
 
 func TestBackendIntegrationLockNoTable(t *testing.T) {
