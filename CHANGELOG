@@ -1,0 +1,6 @@
+v0.1.0 - 2023-10-24
+-------------------
+
+* Add basic circuit breaker implementation
+* Add log package
+* Add backends for Redis and DynamoDB

@@ -1,0 +1,23 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      matrix:
+        go-version: [ "1.18.x", "1.19.x", "1.20.x", "1.21.x" ]
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Start dynamodb local
+        run: >
+          sudo docker run --name dynamodb -d -p 8000:8000 amazon/dynamodb-local
+      - name: Test
+        run: make show-integration-cov
+        env:
+          DYNAMODB_URL: http://localhost:8000

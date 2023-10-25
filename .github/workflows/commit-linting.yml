@@ -1,0 +1,31 @@
+name: "Commit linting"
+
+on: [push, pull_request]
+
+jobs:
+  commit-lint:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # Checkout the entire pull request branch
+        repository: ${{github.event.pull_request.head.repo.full_name}}
+        ref: ${{github.event.pull_request.head.ref}}
+        fetch-depth: ${{github.event.pull_request.commits}}
+    - uses: actions/checkout@v4
+      with:
+        ref: main
+        fetch-depth: 1
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install gitlint
+    - name: Analysing the commits
+      run: |
+        .github/workflows/run-gitlint.sh
