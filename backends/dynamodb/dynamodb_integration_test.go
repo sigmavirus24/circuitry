@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
+	"net/url"
 	"os"
 	"strings"
 	"testing"
@@ -14,9 +16,9 @@ import (
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+	"github.com/aws/smithy-go"
+	smithyendpoints "github.com/aws/smithy-go/endpoints"
 	"github.com/google/uuid"
-	tc "github.com/testcontainers/testcontainers-go"
-	tcw "github.com/testcontainers/testcontainers-go/wait"
 
 	"github.com/sigmavirus24/circuitry"
 	ddbbackend "github.com/sigmavirus24/circuitry/backends/dynamodb"
@@ -32,45 +34,20 @@ func init() {
 	}
 }
 
-func dynamodbContainer(ctx context.Context) (tc.Container, func(*testing.T), error) {
-	req := tc.GenericContainerRequest{
-		ProviderType: tc.ProviderPodman,
-		ContainerRequest: tc.ContainerRequest{
-			Image:        "docker.io/amazon/dynamodb-local",
-			ExposedPorts: []string{"8001/tcp"},
-			WaitingFor:   tcw.ForExposedPort(),
-			Cmd:          []string{"-jar", "DynamoDBLocal.jar", "-inMemory"},
-		},
-		Started: true,
+type endpointResolver struct{}
+
+func (r endpointResolver) ResolveEndpoint(_ context.Context, params dynamodb.EndpointParameters) (smithyendpoints.Endpoint, error) {
+	uri, err := url.Parse(dynamoDBUrl)
+	if err != nil {
+		return smithyendpoints.Endpoint{}, err
 	}
-	ddbContainer, err := tc.GenericContainer(ctx, req)
-	return ddbContainer, func(t *testing.T) {
-		if ddbContainer == nil {
-			return
-		}
-		if err := ddbContainer.Terminate(ctx); err != nil {
-			t.Fatalf("could not terminate dynamodb container; %v", err)
-		}
-	}, err
+	return smithyendpoints.Endpoint{URI: *uri, Headers: make(http.Header), Properties: smithy.Properties{}}, nil
 }
 
-func dynamodbClientFromContainer(ddbContainer tc.Container) (*dynamodb.Client, error) {
-	endpoint, err := ddbContainer.Endpoint(context.TODO(), "")
-	if err != nil {
-		return nil, err
-	}
-	awsCfg := aws.NewConfig()
-	awsCfg.EndpointResolverWithOptions = aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
-		return aws.Endpoint{URL: endpoint}, nil
-	})
-	return dynamodb.NewFromConfig(*awsCfg), nil
-}
+var _ dynamodb.EndpointResolverV2 = (*endpointResolver)(nil)
 
 func dynamodbClientFromURL() *dynamodb.Client {
 	awsCfg := aws.NewConfig()
-	awsCfg.EndpointResolverWithOptions = aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
-		return aws.Endpoint{URL: dynamoDBUrl}, nil
-	})
 	keyID := awsCred()
 	secret := awsCred()
 	token := awsCred()
@@ -83,7 +60,7 @@ func dynamodbClientFromURL() *dynamodb.Client {
 			CanExpire:       false,
 		}, nil
 	})
-	return dynamodb.NewFromConfig(*awsCfg)
+	return dynamodb.NewFromConfig(*awsCfg, dynamodb.WithEndpointResolverV2(&endpointResolver{}))
 }
 
 func deepEqCi(t *testing.T, expected, actual circuitry.CircuitInformation) {
@@ -108,13 +85,6 @@ func awsCred() string {
 func TestBackendIntegrationRetrieveNoTable(t *testing.T) {
 	maybeSkip(t)
 	t.Parallel()
-	/* Re-enable when testcontainers + podman works better
-	ddbContainer, termFn, err := dynamodbContainer(context.TODO())
-	defer termFn(t)
-	if err != nil {
-		t.Fatalf("expected to be able to launch a new container; got %v", err)
-	}
-	*/
 
 	ddbClient := dynamodbClientFromURL()
 
@@ -172,7 +142,7 @@ func TestBackendIntegrationRetrieveFromEmptyTable(t *testing.T) {
 		t.Fatalf("failed to create new test table: %v", err)
 	}
 	defer func() {
-		ddbClient.DeleteTable(context.TODO(), &dynamodb.DeleteTableInput{
+		_, _ = ddbClient.DeleteTable(context.TODO(), &dynamodb.DeleteTableInput{
 			TableName: aws.String(circuitTable),
 		})
 	}()
@@ -223,7 +193,7 @@ func TestBackendIntegrationRetrieveRealData(t *testing.T) {
 		t.Fatalf("failed to create new test table: %v", err)
 	}
 	defer func() {
-		ddbClient.DeleteTable(context.TODO(), &dynamodb.DeleteTableInput{
+		_, _ = ddbClient.DeleteTable(context.TODO(), &dynamodb.DeleteTableInput{
 			TableName: aws.String(circuitTable),
 		})
 	}()
@@ -325,7 +295,7 @@ func TestBackendIntegrationStoreRealData(t *testing.T) {
 		t.Fatalf("failed to create new test table: %v", err)
 	}
 	defer func() {
-		ddbClient.DeleteTable(context.TODO(), &dynamodb.DeleteTableInput{
+		_, _ = ddbClient.DeleteTable(context.TODO(), &dynamodb.DeleteTableInput{
 			TableName: aws.String(circuitTable),
 		})
 	}()

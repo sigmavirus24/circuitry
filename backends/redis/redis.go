@@ -33,7 +33,7 @@ type redLock struct {
 }
 
 func (l *redLock) Lock()   {}
-func (l *redLock) Unlock() { l.lock.Release(l.ctx) }
+func (l *redLock) Unlock() { _ = l.lock.Release(l.ctx) }
 
 // Backend implements the StorageBackender interface for Redis using
 // redis/go-redis/v9 and bsm/redislock

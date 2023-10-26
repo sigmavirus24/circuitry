@@ -120,15 +120,6 @@ func (m *ddbMock) CreateTable(_ context.Context, params *ddb.CreateTableInput, o
 
 var _ ddbbackend.DynamoClient = (*ddbMock)(nil)
 
-func appendResourceNotFound(client *ddbMock) {
-	message := "key not found"
-	client.AddGetItemError(&ddbtypes.ResourceNotFoundException{
-		Message:           &message,
-		ErrorCodeOverride: nil,
-	})
-
-}
-
 func TestWithDynamoBackend(t *testing.T) {
 	client := newDDBMock()
 	opt := ddbbackend.WithDynamoBackend(client, nil, "circuit_info", "circuit_breaker_locks")
@@ -330,5 +321,5 @@ func TestBackendLock(t *testing.T) {
 		t.Fatalf("expected to get a lock, but got err = %v", err)
 	}
 	lock.Lock()
-	lock.Unlock()
+	defer lock.Unlock()
 }
