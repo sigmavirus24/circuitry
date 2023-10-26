@@ -21,3 +21,17 @@ jobs:
         run: make ci-show-integration-cov
         env:
           DYNAMODB_URL: http://localhost:8000
+      - name: Require minimum test coverage percentage
+        env:
+          TESTCOVERAGE_PCT: 98
+        run: |
+          actual_pct="$(go tool cover --func=coverage.out | awk '/^total:.*%$/ { print substr($3, 1, length($3)-1) }')"
+          echo "Verifying test coverage percentage (minimum allowed: ${TESTCOVERAGE_PCT} ; parsed: ${actual_pct})"
+          # NOTE: sys.exit(True) will be a non-zero exit code, so we only want
+          # that when the actual percentage is lower than our configured
+          # threshold
+          python -c "import sys; sys.exit($actual_pct < $TESTCOVERAGE_PCT)"
+      - name: Kill container(s)
+        run: |
+          sudo docker stop dynamodb
+          sudo docker rm dynamodb
