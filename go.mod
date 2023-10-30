@@ -10,7 +10,7 @@ require (
 )
 
 require (
-	cirello.io/dynamolock/v2 v2.0.2
+	cirello.io/dynamolock/v2 v2.0.3
 	github.com/aws/aws-sdk-go-v2 v1.21.2
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.10.43
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression v1.4.71
@@ -32,5 +32,4 @@ require (
 	github.com/stretchr/testify v1.8.4 // indirect
 	golang.org/x/net v0.17.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
