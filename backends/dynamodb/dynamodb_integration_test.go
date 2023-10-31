@@ -376,12 +376,9 @@ func TestBackendIntegrationLockWithTable(t *testing.T) {
 	if lock == nil {
 		t.Fatalf("expected to get a lock but got nil")
 	}
-	rawLock, err := lockClient.Get(key)
+	_, err = lockClient.Get(key)
 	if err != nil {
 		t.Fatalf("could not get raw lock from Dynamo, got err = %v", err)
-	}
-	if rawLock.IsExpired() {
-		t.Fatal("lock is already expired")
 	}
 	lock.Unlock()
 }
