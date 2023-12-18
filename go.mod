@@ -16,7 +16,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression v1.6.12
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.26.6
 	github.com/aws/smithy-go v1.19.0
-	github.com/google/uuid v1.4.0
+	github.com/google/uuid v1.5.0
 )
 
 require (
