@@ -12,9 +12,9 @@ require (
 require (
 	cirello.io/dynamolock/v2 v2.0.3
 	github.com/aws/aws-sdk-go-v2 v1.27.0
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.13.17
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.13.19
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression v1.7.17
-	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.32.3
+	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.32.5
 	github.com/aws/smithy-go v1.20.2
 	github.com/google/uuid v1.6.0
 )
@@ -22,7 +22,7 @@ require (
 require (
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.3.7 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.7 // indirect
-	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.20.7 // indirect
+	github.com/aws/aws-sdk-go-v2/service/dynamodbstreams v1.20.8 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.11.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/endpoint-discovery v1.9.8 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
