@@ -1,7 +1,8 @@
 module github.com/sigmavirus24/circuitry
 
-go 1.21
-toolchain go1.22.5
+go 1.22
+
+toolchain go1.22.9
 
 require (
 	github.com/bsm/redislock v0.9.4
