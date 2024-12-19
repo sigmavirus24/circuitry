@@ -1,6 +1,8 @@
 module github.com/sigmavirus24/circuitry
 
-go 1.21
+go 1.22
+
+toolchain go1.22.9
 
 require (
 	github.com/bsm/redislock v0.9.4
@@ -10,9 +12,10 @@ require (
 )
 
 require (
-	cirello.io/dynamolock/v2 v2.0.3
+	cirello.io/dynamolock/v2 v2.1.0
 	github.com/aws/aws-sdk-go-v2 v1.32.6
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.15.21
+
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression v1.7.38
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.38.0
 	github.com/aws/smithy-go v1.22.1
