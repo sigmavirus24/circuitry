@@ -1,3 +1,8 @@
+v0.1.2 - 2024-12-19
+-------------------
+
+* Update dependencies and CI for latest Go versions
+
 v0.1.1 - 2023-10-24
 -------------------
 
