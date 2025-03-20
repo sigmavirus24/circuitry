@@ -1,12 +1,12 @@
 module github.com/sigmavirus24/circuitry
 
 go 1.22
-toolchain go1.23.7
+toolchain go1.24.1
 
 require (
 	github.com/bsm/redislock v0.9.4
 	github.com/go-redis/redismock/v9 v9.2.0
-	github.com/redis/go-redis/v9 v9.7.1 // Until https://github.com/go-redis/redismock/pull/85/files is merged
+	github.com/redis/go-redis/v9 v9.7.3 // Until https://github.com/go-redis/redismock/pull/85/files is merged
 	github.com/sirupsen/logrus v1.9.3
 )
 
