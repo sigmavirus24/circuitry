@@ -11,7 +11,6 @@ import (
 	ddb "github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	ddbtypes "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/sigmavirus24/circuitry"
-	"github.com/sigmavirus24/circuitry/backends/dynamodb"
 	ddbbackend "github.com/sigmavirus24/circuitry/backends/dynamodb"
 )
 
@@ -218,7 +217,7 @@ func TestBackendRetrieveUnmarshalError(t *testing.T) {
 		LockTableName:    "circuit_locks",
 	}
 	_, err := backend.Retrieve(context.TODO(), "circuit-name-retrieve")
-	var localErr *dynamodb.LocalBackendError
+	var localErr *ddbbackend.LocalBackendError
 	if !errors.As(err, &localErr) {
 		t.Fatalf("expected to receive LocalBackendError, got err = %v", err)
 	}
