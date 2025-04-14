@@ -6,10 +6,10 @@ all: lint test
 
 lint: $(files)
 	@echo "Running autoformatters ..."
-	@go fmt .
-	@goimports -w .
+	@go fmt ./...
+	@goimports -w ./
 	@echo "Running golangci-lint ..."
-	@golangci-lint run . 
+	@golangci-lint run --fix ./...
 
 test: $(files)
 	@go test -v -cover -coverprofile=coverage.out . ./...

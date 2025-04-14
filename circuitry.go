@@ -107,7 +107,7 @@ func (cb *circuitBreaker) refreshFromRemoteState(ctx context.Context) error {
 	return nil
 }
 
-func (cb *circuitBreaker) updateRemoteState(ctx context.Context, now time.Time) error {
+func (cb *circuitBreaker) updateRemoteState(ctx context.Context, _ time.Time) error {
 	info := cb.toCircuitInformation()
 	err := cb.storage.Store(ctx, cb.name, info)
 	if err != nil {
@@ -136,7 +136,7 @@ func (cb *circuitBreaker) fromCircuitInformation(info CircuitInformation) {
 	cb.counts = fromCircuitInformation(info)
 	cb.state = info.State
 	cb.generation = info.Generation
-	if info.ExpiresAfter == zero && info.Generation == 0 && info.Total == 0 {
+	if info.ExpiresAfter.IsZero() && info.Generation == 0 && info.Total == 0 {
 		if cb.resetCycle != 0 {
 			cb.expiry = time.Now().Add(cb.resetCycle)
 		} else {
@@ -183,7 +183,7 @@ func (cb *circuitBreaker) Execute(ctx context.Context, work WorkFn) (any, error,
 	return retVal, retErr, storageErr
 }
 
-func (cb *circuitBreaker) endSuccess(ctx context.Context, now time.Time) {
+func (cb *circuitBreaker) endSuccess(_ context.Context, now time.Time) {
 	switch cb.state {
 	case CircuitClosed:
 		cb.counts.AddSuccess()
@@ -195,7 +195,7 @@ func (cb *circuitBreaker) endSuccess(ctx context.Context, now time.Time) {
 	}
 }
 
-func (cb *circuitBreaker) endFailure(ctx context.Context, now time.Time) {
+func (cb *circuitBreaker) endFailure(_ context.Context, now time.Time) {
 	switch cb.state {
 	case CircuitClosed:
 		cb.counts.AddFailure()

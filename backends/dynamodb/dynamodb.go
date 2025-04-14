@@ -10,6 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	ddb "github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	ddbtypes "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+
 	"github.com/sigmavirus24/circuitry"
 )
 
@@ -43,7 +44,7 @@ func (l *DynamoLock) Lock() {}
 
 // Unlock releases the backend lock
 func (l *DynamoLock) Unlock() {
-	l.lock.Close()
+	_ = l.lock.Close()
 }
 
 var _ sync.Locker = (*DynamoLock)(nil)

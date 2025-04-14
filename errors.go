@@ -78,7 +78,7 @@ func newCircuitSpecificSettingsConflictError(settingsName string, circuitName st
 }
 
 func (e CircuitSpecificSettingsConflictError) Error() string {
-	formatStr := e.SettingsConflictError.formatStr
+	formatStr := e.formatStr
 	if formatStr == "" {
 		formatStr = cssceFormatStr
 	}
