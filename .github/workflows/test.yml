@@ -1,5 +1,8 @@
 name: Test
 on: [push, pull_request]
+permissions:
+  contents: read
+
 jobs:
   test:
     strategy:
@@ -8,6 +11,11 @@ jobs:
         #os: [ ubuntu-latest, macos-latest, windows-latest ]
     runs-on: "ubuntu-latest"
     steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@c6295a65d1254861815972266d5933fd6e532bdf # v2.11.1
+        with:
+          egress-policy: audit
+
       - name: Install Go
         uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5
         with:
