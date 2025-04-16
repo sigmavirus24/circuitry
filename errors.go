@@ -94,7 +94,7 @@ var _ error = (*CircuitSpecificSettingsConflictError)(nil)
 
 var (
 	// ErrStorageBackendAlreadySet is returned when the StorageBackend setting
-	// has alredy been configured
+	// has already been configured
 	ErrStorageBackendAlreadySet = newSettingsConflictError("StorageBackend")
 	// ErrFallbackErrorMatcherAlreadySet is returned when the ErrorMatcher setting has
 	// already been configured

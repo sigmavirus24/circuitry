@@ -6,7 +6,7 @@ import (
 )
 
 // StorageBackender defines the contract expected of a Storage Backend for the
-// cicruit breaker in use.
+// [CircuitBreaker] to use to store information.
 type StorageBackender interface {
 	// Store the circuit information for the given string name
 	Store(context.Context, string, CircuitInformation) error
@@ -17,8 +17,8 @@ type StorageBackender interface {
 	Lock(context.Context, string) (sync.Locker, error)
 }
 
-// WithStorageBackend allows the user to specify a StorageBackender
-// implementation for CircuitBreakers
+// WithStorageBackend allows the user to specify a [StorageBackender]
+// implementation for [CircuitBreaker]s.
 func WithStorageBackend(backend StorageBackender) SettingsOption {
 	return func(s *FactorySettings) error {
 		if s.StorageBackend != nil {

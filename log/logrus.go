@@ -2,7 +2,8 @@ package log
 
 import "github.com/sirupsen/logrus"
 
-// Logrus implements circuitry's Logger interface using sirupsen/logrus
+// Logrus implements circuitry's [Logger] interface using
+// [github.com/sirupsen/logrus]
 type Logrus struct {
 	l logrus.FieldLogger
 }

@@ -10,7 +10,7 @@ import (
 )
 
 // WorkFn defines the allowed interface of a function that can be passed to
-// Execute
+// [CircuitBreaker].Execute.
 type WorkFn func() (any, error)
 
 // CircuitBreaker defines the interface for an implementation of a circuit
@@ -256,19 +256,19 @@ func (cb *circuitBreaker) State(ctx context.Context) (CircuitState, error) {
 
 var _ CircuitBreaker = (*circuitBreaker)(nil)
 
-// CircuitBreakerFactory creates CircuitBreakers for a given named circuit
+// CircuitBreakerFactory creates [CircuitBreaker]s for a given named circuit
 type CircuitBreakerFactory struct {
 	settings *FactorySettings
 }
 
-// NewCircuitBreakerFactory builds a new CircuitBreakerFactory from
-// FactorySettings supplied
+// NewCircuitBreakerFactory builds a new [CircuitBreakerFactory] from
+// the [FactorySettings] supplied
 func NewCircuitBreakerFactory(s *FactorySettings) *CircuitBreakerFactory {
 	return &CircuitBreakerFactory{s}
 }
 
-// BreakerFor builds a new CircuitBreaker for the given named circuit and
-// includes the circuit breaker contxt provided. The context is passed into
+// BreakerFor builds a new [CircuitBreaker] for the given named circuit and
+// includes the circuit breaker context provided. The context is passed into
 // the naming function and can be used by custom naming functions to produce
 // names based off of a template
 func (cbf *CircuitBreakerFactory) BreakerFor(name string, circuitContext map[string]any) CircuitBreaker {

@@ -9,6 +9,7 @@ import (
 
 	"github.com/bsm/redislock"
 	redis "github.com/redis/go-redis/v9"
+
 	"github.com/sigmavirus24/circuitry"
 )
 
@@ -36,7 +37,7 @@ func (l *redLock) Lock()   {}
 func (l *redLock) Unlock() { _ = l.lock.Release(l.ctx) }
 
 // Backend implements the StorageBackender interface for Redis using
-// redis/go-redis/v9 and bsm/redislock
+// [github.com/redis/go-redis/v9] and [github.com/bsm/redislock]
 type Backend struct {
 	Client         Client
 	Locker         Locker
@@ -57,7 +58,7 @@ func (c *Backend) Store(ctx context.Context, name string, ci circuitry.CircuitIn
 
 // Retrieve looks up the key in Redis and returns the value after
 // deserializing it from JSON. If the key is not present in Redis, this will
-// return an empty circuitry.CircuitInformation
+// return an empty [github.com/sigmavirus24/circuitry.CircuitInformation].
 func (c *Backend) Retrieve(ctx context.Context, name string) (circuitry.CircuitInformation, error) {
 	jsonCI, err := c.Client.Get(ctx, name).Result()
 	ci := circuitry.CircuitInformation{}

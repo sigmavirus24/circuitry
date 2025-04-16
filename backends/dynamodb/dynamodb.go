@@ -39,7 +39,7 @@ type DynamoLock struct {
 	lock      *ddblock.Lock
 }
 
-// Lock does nothing as the lock has alrady been acquired at this point
+// Lock does nothing as the lock has already been acquired at this point
 func (l *DynamoLock) Lock() {}
 
 // Unlock releases the backend lock

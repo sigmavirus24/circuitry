@@ -1,4 +1,4 @@
-// Package circuitry provides a framework for building distribuited Circuit
+// Package circuitry provides a framework for building distributed Circuit
 // Breakers. It's primarily designed to be able to synchronize state with a
 // backend so that a distributed system can have one Circuit Breaker for any
 // piece it cares to implement that for.
@@ -12,7 +12,7 @@
 // system would have to individually reach your failure threshold to trip the
 // breaker before all instances have stopped talking to it. That could affect
 // availability and performance for your users. Alternatively, you might have
-// ot set the threshold artificially low and risk the breaker opening when it
+// to set the threshold artificially low and risk the breaker opening when it
 // didn't need to.
 //
 // circuitry aims to provide an excellent distributed circuit breaker pattern
@@ -56,7 +56,7 @@
 // # Additional Resources
 //
 // For additional information see also:
-// - https://learn.microsoft.com/en-us/previous-versions/msp-n-p/dn589784(v=pandp.10)?redirectedfrom=MSDN
-// - https://www.redhat.com/architect/circuit-breaker-architecture-pattern
-// - https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/circuit-breaker.html
+//   - https://learn.microsoft.com/en-us/previous-versions/msp-n-p/dn589784(v=pandp.10)?redirectedfrom=MSDN
+//   - https://www.redhat.com/architect/circuit-breaker-architecture-pattern
+//   - https://docs.aws.amazon.com/prescriptive-guidance/latest/cloud-design-patterns/circuit-breaker.html
 package circuitry
