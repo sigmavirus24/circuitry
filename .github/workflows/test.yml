@@ -9,11 +9,11 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: Install Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5
         with:
           go-version: ${{ matrix.go-version }}
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Start dynamodb local
         run: >
           sudo docker run --name dynamodb -d -p 8000:8000 amazon/dynamodb-local
