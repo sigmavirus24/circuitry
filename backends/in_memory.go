@@ -13,7 +13,7 @@ type infoWithLock struct {
 }
 
 // InMemoryBackend defines an in
-// [github.com/sigmavirus24/circuitry>StorageBackender] backend designed to be
+// [github.com/sigmavirus24/circuitry.StorageBackender] backend designed to be
 // used primarily for proofs of concept and testing
 type InMemoryBackend struct {
 	information map[string]infoWithLock
