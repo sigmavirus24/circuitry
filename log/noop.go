@@ -1,6 +1,6 @@
 package log
 
-// NoOp implements a no-op version of the  interface as a
+// NoOp implements a no-op version of the interface as a
 // reasonable default for circuitry to use
 type NoOp struct{}
 

@@ -12,14 +12,15 @@ type infoWithLock struct {
 	lock        *sync.Mutex
 }
 
-// InMemoryBackend defines an in memory backend designed to be used primarily
-// for proofs of concept and testing
+// InMemoryBackend defines an in
+// [github.com/sigmavirus24/circuitry.StorageBackender] backend designed to be
+// used primarily for proofs of concept and testing
 type InMemoryBackend struct {
 	information map[string]infoWithLock
 	lock        sync.Mutex
 }
 
-// NewInMemoryBackend creates a new in memory storage backend
+// NewInMemoryBackend creates a new [InMemoryBackend]
 func NewInMemoryBackend() circuitry.StorageBackender {
 	return &InMemoryBackend{
 		information: make(map[string]infoWithLock),

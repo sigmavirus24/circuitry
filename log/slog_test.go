@@ -1,6 +1,3 @@
-//go:build go1.21
-
-// +bulid go1.21
 package log_test
 
 import (

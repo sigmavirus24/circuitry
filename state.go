@@ -9,11 +9,11 @@ import (
 type CircuitState uint32
 
 const (
-	// CircuitClosed describes a closed CircuitBreaker
+	// CircuitClosed describes a closed [CircuitBreaker]
 	CircuitClosed CircuitState = iota
-	// CircuitOpen describes an open CircuitBreaker
+	// CircuitOpen describes an open [CircuitBreaker]
 	CircuitOpen
-	// CircuitHalfOpen describes a half-open CircuitBreaker
+	// CircuitHalfOpen describes a half-open [CircuitBreaker]
 	CircuitHalfOpen
 )
 
@@ -51,8 +51,8 @@ func (es ExecutionStatus) String() string {
 	}
 }
 
-// CircuitInformation describes the full state of a given CircuitBreaker to be
-// for use with a StorageBackender
+// CircuitInformation describes the full state of a given [CircuitBreaker] to be
+// for use with a [StorageBackender]
 type CircuitInformation struct {
 	State                CircuitState `json:"state"`
 	Generation           uint64       `json:"generation"`
@@ -64,7 +64,7 @@ type CircuitInformation struct {
 	ExpiresAfter         time.Time    `json:"expires_after"`
 }
 
-// NewCircuitInformation creates a new CircuitInformation with the state being
+// NewCircuitInformation creates a new [CircuitInformation] with the state being
 // Open and an expiration
 func NewCircuitInformation(expiredAfter time.Duration) CircuitInformation {
 	return CircuitInformation{
