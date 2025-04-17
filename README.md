@@ -116,7 +116,7 @@ Much of the design of this library was informed by github.com/sony/go-breaker.
 The significant differences are as follows:
 
 * Representation of the internal state of the circuit breaker to allow it to
-  be stored/retrieved 
+  be stored/retrieved
 
 * Naming of some constants to make it clearer what they are
 

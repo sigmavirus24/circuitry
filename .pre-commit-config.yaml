@@ -6,7 +6,8 @@ repos:
 - repo: https://github.com/golangci/golangci-lint
   rev: v2.0.2
   hooks:
-  - id: golangci-lint
+  - id: golangci-lint-config-verify
+  - id: golangci-lint-full
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v5.0.0
   hooks:
