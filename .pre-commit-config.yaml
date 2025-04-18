@@ -13,3 +13,12 @@ repos:
   hooks:
   - id: end-of-file-fixer
   - id: trailing-whitespace
+- repo: https://github.com/codespell-project/codespell
+  rev: v2.4.1
+  hooks:
+  - id: codespell
+ci:
+  # https://pre-commit.ci/#configuration
+  skip:
+    - golangci-lint-config-verify
+    - golangci-lint-full
