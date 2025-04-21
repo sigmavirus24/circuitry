@@ -43,3 +43,7 @@ jobs:
         run: |
           sudo docker stop dynamodb
           sudo docker rm dynamodb
+      - name: Check for vulnerabilities
+        run: |
+          go install golang.org/x/vuln/cmd/govulncheck@latest
+          make vulncheck
