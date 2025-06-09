@@ -7,7 +7,7 @@ toolchain go1.23.7
 require (
 	github.com/bsm/redislock v0.9.4
 	github.com/go-redis/redismock/v9 v9.2.0
-	github.com/redis/go-redis/v9 v9.9.0 // Until https://github.com/go-redis/redismock/pull/85/files is merged
+	github.com/redis/go-redis/v9 v9.10.0 // Until https://github.com/go-redis/redismock/pull/85/files is merged
 	github.com/sirupsen/logrus v1.9.3
 )
 
