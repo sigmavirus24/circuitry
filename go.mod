@@ -15,7 +15,7 @@ require (
 	cirello.io/dynamolock/v2 v2.1.0
 	github.com/aws/aws-sdk-go-v2 v1.39.4
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.20.19
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression v1.8.14
+	github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression v1.8.19
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.52.2
 	github.com/aws/smithy-go v1.23.1
 	github.com/google/uuid v1.6.0
