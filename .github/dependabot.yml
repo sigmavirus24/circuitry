@@ -1,10 +1,33 @@
 version: 2
 updates:
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-  - package-ecosystem: "gomod"
-    directory: "/"
-    schedule:
-      interval: "weekly"
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+  groups:
+    actions:
+      pattern: "*"
+- package-ecosystem: "gomod"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+  groups:
+    aws:
+      applies-to: version-updates
+      patterns:
+      - "github.com/aws/aws-sdk-go-v2/*"
+    redis:
+      applies-to: version-updates
+      patterns:
+      - "github.com/redis/go-redis/*"
+      - "github.com/bsm/redislock*"
+      - "github.com/go-redis/redismock/*"
+    gomod-remainder:
+      applies-to: version-updates
+      patterns:
+      - "*"
+      exclude-patterns:
+      - "github.com/aws/aws-sdk-go-v2/*"
+      - "github.com/redis/go-redis/*"
+      - "github.com/bsm/redislock*"
+      - "github.com/go-redis/redismock/*"
