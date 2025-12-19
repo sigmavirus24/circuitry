@@ -6,7 +6,8 @@ updates:
     interval: "weekly"
   groups:
     actions:
-      pattern: "*"
+      patterns:
+      - "*"
 - package-ecosystem: "gomod"
   directory: "/"
   schedule:
