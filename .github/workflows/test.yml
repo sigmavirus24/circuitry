@@ -66,5 +66,4 @@ jobs:
       - name: Check for vulnerabilities
         if: ${{ matrix.go.go-version-file != 'go.mod' }}
         run: |
-          go install golang.org/x/vuln/cmd/govulncheck@latest
           make vulncheck
