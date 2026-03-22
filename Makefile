@@ -5,7 +5,7 @@ files := $(wildcard *.go **/*.go)
 all: lint test
 
 vulncheck:
-	@govulncheck ./...
+	@go tool govulncheck ./...
 
 lint: $(files)
 	@echo "Running autoformatters ..."
