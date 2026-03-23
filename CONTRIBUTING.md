@@ -1,6 +1,6 @@
 # Contributing
 
-Issues and Pull Requests are welcome if they are well-researched and _not_ 
+Issues and Pull Requests are welcome if they are well-researched and _not_
 hallucinated by an LLM.
 
 Obvious slop pull requests and issues will be closed without comment.
