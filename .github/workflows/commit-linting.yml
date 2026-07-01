@@ -9,20 +9,20 @@ jobs:
   commit-lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4
       with:
         persist-credentials: false
         # Checkout the entire pull request branch
         repository: ${{github.event.pull_request.head.repo.full_name}}
         ref: ${{github.event.pull_request.head.ref}}
         fetch-depth: ${{github.event.pull_request.commits}}
-    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v4
+    - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v4
       with:
         persist-credentials: false
         ref: main
         fetch-depth: 1
     - name: Set up Python 3.14
-      uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v5
+      uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v5
       with:
         python-version: 3.14
     - name: Install dependencies
