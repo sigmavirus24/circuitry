@@ -1,6 +1,6 @@
 module github.com/sigmavirus24/circuitry
 
-go 1.24
+go 1.25.0
 
 require (
 	github.com/bsm/redislock v0.9.4
@@ -29,9 +29,9 @@ require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	golang.org/x/mod v0.22.0 // indirect
-	golang.org/x/net v0.38.0 // indirect
+	golang.org/x/net v0.55.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/sys v0.45.0 // indirect
 	golang.org/x/telemetry v0.0.0-20240522233618-39ace7a40ae7 // indirect
 	golang.org/x/tools v0.29.0 // indirect
 	golang.org/x/vuln v1.1.4 // indirect
