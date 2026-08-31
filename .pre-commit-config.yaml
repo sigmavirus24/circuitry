@@ -4,7 +4,7 @@ repos:
   hooks:
   - id: gitleaks
 - repo: https://github.com/golangci/golangci-lint
-  rev: v2.12.2
+  rev: v2.13.2
   hooks:
   - id: golangci-lint-config-verify
   - id: golangci-lint-full
@@ -14,7 +14,7 @@ repos:
   - id: end-of-file-fixer
   - id: trailing-whitespace
 - repo: https://github.com/codespell-project/codespell
-  rev: v2.4.2
+  rev: v2.4.3
   hooks:
   - id: codespell
 ci:
